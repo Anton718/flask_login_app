@@ -1,0 +1,27 @@
+.content {
+    margin: 20px;
+}
+
+.form-control {
+    max-width: 300px;
+}
+
+.btn-primary {
+    max-width: 300px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    text-align: center;
+    padding: 10px;
+}
+
+.posts {
+    padding:10px;
+}
+
+#chatname {
+    max-width: 200px;
+}

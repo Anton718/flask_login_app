@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+
+{%block body%}
+<h2>Create new User:</h2>
+<br>
+<form action="/register" method="post">
+    <div class="mb-3">
+      <label for="registeremail" class="form-label">Email address</label>
+      <input autocomplete="off" required type="email" name="email" class="form-control" id="registeremail" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="registerpassword" class="form-label">Password</label>
+      <input autocomplete="off" required type="password" name="password" class="form-control" id="registerpassword" >
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+{%endblock%}

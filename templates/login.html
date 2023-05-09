@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+
+{%block body%}
+<h2>Log in:</h2>
+<br>
+<form action="/login" method="post">
+    <div class="mb-3">
+      <label for="loginemail" class="form-label">Email address</label>
+      <input autocomplete="off" type="email" name="email" class="form-control" id="loginemail" required aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="loginpassword" class="form-label">Password</label>
+      <input autocomplete="off" type="password" name="password" class="form-control" id="loginpassword" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Log in</button>
+</form>
+
+
+{%endblock%}

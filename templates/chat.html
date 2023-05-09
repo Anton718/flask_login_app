@@ -1,0 +1,21 @@
+{% extends "user.html" %}
+
+{%block content%}
+<div class="wrapper">
+    <p class="greeting"> </p>
+<input type="text" id="chatname" placeholder="Select your chat name">
+<textarea name="text" id="text" cols="30" rows="3" placeholder="Type your post here"></textarea>
+<input type="submit" class="submit" style="width:150px">
+<input type="submit" class="clear" style="width:150px">
+</div>
+<div class="posts">
+    Posts:
+    <div class="posts inner">
+
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script type="text/javascript" src="/static/something.js"></script>
+{%endblock%}
