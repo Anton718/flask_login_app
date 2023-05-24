@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, flash, url_for, request, session
 import sqlite3
 from datetime import timedelta
+from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dfhsjnsfghsrthsfgaert34556rghfh'
@@ -14,20 +15,31 @@ def index():
     else:
         if request.method == "POST":
             try:
-                connection = sqlite3.connect('registered.db')
-                cur = connection.cursor()
-                cur.execute("select * from registers where email=? and password=?", (request.form['email'].lower(), request.form['password'].lower()))
-                if cur.fetchone():
-                    session.permanent = True
-                    session['user'] = request.form['email']
-                    flash(f"""You logged in, welcome, <<<{request.form['email']}>>> !!
-                    Explore what's new today in INFO section.""", 'info')
+                conn = sqlite3.connect('registered.db')
+                input_email = request.form['email']
+                input_pass = request.form['password']
+                print(input_pass)
+                print('connection established')
+                curs = conn.cursor()
+                password = curs.execute('select password from registers where email = ?', [input_email]).fetchone()
+                to_string_hash = ''.join(password)
+                print(to_string_hash)
+                if (sha256_crypt.verify(input_pass, to_string_hash)):
+                        session.permanent = True
+                        session['user'] = request.form['email']
+                        flash(f"""You logged in, welcome, <{request.form['email']}> !!
+                        Explore what's new today in INFO section.""", 'info')
+              
                 else:
                     flash('Not registered or email and password incorrect.', 'error')
+                    print('Not registered or email and password incorrect.')
             except: 
-                connection.rollback()
+                conn.rollback()
+                print("hmm")
+                flash("Email or password is incorrect")
             finally:
-                connection.close()
+                conn.close()
+                print('connection closed')
                 return redirect(url_for("index"))
         else:
             return render_template('login.html')
@@ -56,15 +68,16 @@ def register():
         if request.method == "POST":
             try:
                 connection = sqlite3.connect('registered.db')
-                connection.execute("INSERT INTO registers (email, password) VALUES (?, ?)", (request.form['email'].lower(), request.form['password'].lower()))
+                connection.execute("INSERT INTO registers (email, password) VALUES (?, ?)", 
+                (request.form['email'].lower(), sha256_crypt.hash(request.form['password'])))
                 connection.commit()
                 session.permanent = True
                 session['user'] = request.form['email']
-                flash('You registered a new user!')
+                flash('You are registered!')
             except: 
                 connection.rollback()
                 print('email already exists')
-                flash(f"A user with  email: <<<{request.form['email']}>>> already exists.", 'error')
+                flash(f"A user with  email: <{request.form['email']}> already exists.", 'error')
             finally:
                 connection.close()
                 return redirect(url_for("user"))
