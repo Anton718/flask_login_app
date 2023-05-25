@@ -4,7 +4,7 @@ from datetime import timedelta
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'dfhsjnsfghsrthsfgaert34556rghfh'
+app.config['SECRET_KEY'] = 'dfmlgdfdfkgjdlfkgjdlfkgjsldfkjdflkfn453453455'
 app.permanent_session_lifetime = timedelta(minutes=30)
 
 @app.route("/", methods=["POST", "GET"])
