@@ -105,7 +105,7 @@ def contacts():
          with open("emails.csv", "a") as file:
             email = request.form['mail']
             content = request.form['mailcontent']
-            file.write(f"{email}, {content}\n") 
+            file.write(f"{email},{content}\n") 
             flash("Your email was sent. Thank you!", "info")
             return render_template("contacts.html")
     else:
